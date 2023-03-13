@@ -1,0 +1,10 @@
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.csprojAssemblyReference.cache
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\hospitalgame.DoctorGame.resources
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.Properties.Resources.resources
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.csproj.GenerateResource.cache
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.csproj.CoreCompileInputs.cache
+C:\Users\Ben\source\repos\nea\nea\bin\Debug\nea.exe.config
+C:\Users\Ben\source\repos\nea\nea\bin\Debug\nea.exe
+C:\Users\Ben\source\repos\nea\nea\bin\Debug\nea.pdb
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.exe
+C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.pdb
