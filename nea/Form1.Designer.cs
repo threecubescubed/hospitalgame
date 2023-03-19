@@ -30,14 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.messages = new System.Windows.Forms.Label();
-            this.startBtn = new System.Windows.Forms.Button();
-            this.yesBtn = new System.Windows.Forms.Button();
-            this.noBtn = new System.Windows.Forms.Button();
-            this.oneBtn = new System.Windows.Forms.Button();
-            this.twoBtn = new System.Windows.Forms.Button();
-            this.threeBtn = new System.Windows.Forms.Button();
-            this.fourBtn = new System.Windows.Forms.Button();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.YesBtn = new System.Windows.Forms.Button();
+            this.NoBtn = new System.Windows.Forms.Button();
+            this.OneBtn = new System.Windows.Forms.Button();
+            this.TwoBtn = new System.Windows.Forms.Button();
+            this.ThreeBtn = new System.Windows.Forms.Button();
+            this.FourBtn = new System.Windows.Forms.Button();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
             this.heartRateLbl = new System.Windows.Forms.Label();
             this.bloodPressureLbl = new System.Windows.Forms.Label();
             this.satsLbl = new System.Windows.Forms.Label();
@@ -54,93 +53,82 @@
             this.messages.Size = new System.Drawing.Size(694, 316);
             this.messages.TabIndex = 0;
             // 
-            // startBtn
+            // YesBtn
             // 
-            this.startBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startBtn.Location = new System.Drawing.Point(713, 12);
-            this.startBtn.Name = "startBtn";
-            this.startBtn.Size = new System.Drawing.Size(75, 40);
-            this.startBtn.TabIndex = 1;
-            this.startBtn.Text = "Start";
-            this.startBtn.UseVisualStyleBackColor = true;
-            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
+            this.YesBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YesBtn.Location = new System.Drawing.Point(747, 12);
+            this.YesBtn.Name = "YesBtn";
+            this.YesBtn.Size = new System.Drawing.Size(41, 40);
+            this.YesBtn.TabIndex = 2;
+            this.YesBtn.Text = "Y";
+            this.YesBtn.UseVisualStyleBackColor = true;
+            this.YesBtn.Visible = false;
+            this.YesBtn.Click += new System.EventHandler(this.YesBtn_Click);
             // 
-            // yesBtn
+            // NoBtn
             // 
-            this.yesBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yesBtn.Location = new System.Drawing.Point(747, 59);
-            this.yesBtn.Name = "yesBtn";
-            this.yesBtn.Size = new System.Drawing.Size(41, 40);
-            this.yesBtn.TabIndex = 2;
-            this.yesBtn.Text = "Y";
-            this.yesBtn.UseVisualStyleBackColor = true;
-            this.yesBtn.Visible = false;
-            this.yesBtn.Click += new System.EventHandler(this.yesBtn_Click);
+            this.NoBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NoBtn.Location = new System.Drawing.Point(747, 58);
+            this.NoBtn.Name = "NoBtn";
+            this.NoBtn.Size = new System.Drawing.Size(41, 40);
+            this.NoBtn.TabIndex = 3;
+            this.NoBtn.Text = "N";
+            this.NoBtn.UseVisualStyleBackColor = true;
+            this.NoBtn.Visible = false;
+            this.NoBtn.Click += new System.EventHandler(this.NoBtn_Click);
             // 
-            // noBtn
+            // OneBtn
             // 
-            this.noBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noBtn.Location = new System.Drawing.Point(747, 105);
-            this.noBtn.Name = "noBtn";
-            this.noBtn.Size = new System.Drawing.Size(41, 40);
-            this.noBtn.TabIndex = 3;
-            this.noBtn.Text = "N";
-            this.noBtn.UseVisualStyleBackColor = true;
-            this.noBtn.Visible = false;
-            this.noBtn.Click += new System.EventHandler(this.noBtn_Click);
+            this.OneBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OneBtn.Location = new System.Drawing.Point(747, 104);
+            this.OneBtn.Name = "OneBtn";
+            this.OneBtn.Size = new System.Drawing.Size(41, 40);
+            this.OneBtn.TabIndex = 4;
+            this.OneBtn.Text = "1";
+            this.OneBtn.UseVisualStyleBackColor = true;
+            this.OneBtn.Visible = false;
+            this.OneBtn.Click += new System.EventHandler(this.OneBtn_Click);
             // 
-            // oneBtn
+            // TwoBtn
             // 
-            this.oneBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oneBtn.Location = new System.Drawing.Point(747, 151);
-            this.oneBtn.Name = "oneBtn";
-            this.oneBtn.Size = new System.Drawing.Size(41, 40);
-            this.oneBtn.TabIndex = 4;
-            this.oneBtn.Text = "1";
-            this.oneBtn.UseVisualStyleBackColor = true;
-            this.oneBtn.Visible = false;
-            this.oneBtn.Click += new System.EventHandler(this.oneBtn_Click);
+            this.TwoBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TwoBtn.Location = new System.Drawing.Point(747, 150);
+            this.TwoBtn.Name = "TwoBtn";
+            this.TwoBtn.Size = new System.Drawing.Size(41, 40);
+            this.TwoBtn.TabIndex = 5;
+            this.TwoBtn.Text = "2";
+            this.TwoBtn.UseVisualStyleBackColor = true;
+            this.TwoBtn.Visible = false;
+            this.TwoBtn.Click += new System.EventHandler(this.TwoBtn_Click);
             // 
-            // twoBtn
+            // ThreeBtn
             // 
-            this.twoBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.twoBtn.Location = new System.Drawing.Point(747, 197);
-            this.twoBtn.Name = "twoBtn";
-            this.twoBtn.Size = new System.Drawing.Size(41, 40);
-            this.twoBtn.TabIndex = 5;
-            this.twoBtn.Text = "2";
-            this.twoBtn.UseVisualStyleBackColor = true;
-            this.twoBtn.Visible = false;
-            this.twoBtn.Click += new System.EventHandler(this.twoBtn_Click);
+            this.ThreeBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ThreeBtn.Location = new System.Drawing.Point(747, 196);
+            this.ThreeBtn.Name = "ThreeBtn";
+            this.ThreeBtn.Size = new System.Drawing.Size(41, 40);
+            this.ThreeBtn.TabIndex = 6;
+            this.ThreeBtn.Text = "3";
+            this.ThreeBtn.UseVisualStyleBackColor = true;
+            this.ThreeBtn.Visible = false;
+            this.ThreeBtn.Click += new System.EventHandler(this.ThreeBtn_Click);
             // 
-            // threeBtn
+            // FourBtn
             // 
-            this.threeBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.threeBtn.Location = new System.Drawing.Point(747, 243);
-            this.threeBtn.Name = "threeBtn";
-            this.threeBtn.Size = new System.Drawing.Size(41, 40);
-            this.threeBtn.TabIndex = 6;
-            this.threeBtn.Text = "3";
-            this.threeBtn.UseVisualStyleBackColor = true;
-            this.threeBtn.Visible = false;
-            this.threeBtn.Click += new System.EventHandler(this.threeBtn_Click);
+            this.FourBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FourBtn.Location = new System.Drawing.Point(747, 242);
+            this.FourBtn.Name = "FourBtn";
+            this.FourBtn.Size = new System.Drawing.Size(41, 40);
+            this.FourBtn.TabIndex = 7;
+            this.FourBtn.Text = "4";
+            this.FourBtn.UseVisualStyleBackColor = true;
+            this.FourBtn.Visible = false;
+            this.FourBtn.Click += new System.EventHandler(this.FourBtn_Click);
             // 
-            // fourBtn
+            // Timer
             // 
-            this.fourBtn.Font = new System.Drawing.Font("Century", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fourBtn.Location = new System.Drawing.Point(747, 289);
-            this.fourBtn.Name = "fourBtn";
-            this.fourBtn.Size = new System.Drawing.Size(41, 40);
-            this.fourBtn.TabIndex = 7;
-            this.fourBtn.Text = "4";
-            this.fourBtn.UseVisualStyleBackColor = true;
-            this.fourBtn.Visible = false;
-            this.fourBtn.Click += new System.EventHandler(this.fourBtn_Click);
-            // 
-            // timer
-            // 
-            this.timer.Interval = 2000;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.Timer.Interval = 2000;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // heartRateLbl
             // 
@@ -213,13 +201,12 @@
             this.Controls.Add(this.satsLbl);
             this.Controls.Add(this.bloodPressureLbl);
             this.Controls.Add(this.heartRateLbl);
-            this.Controls.Add(this.fourBtn);
-            this.Controls.Add(this.threeBtn);
-            this.Controls.Add(this.twoBtn);
-            this.Controls.Add(this.oneBtn);
-            this.Controls.Add(this.noBtn);
-            this.Controls.Add(this.yesBtn);
-            this.Controls.Add(this.startBtn);
+            this.Controls.Add(this.FourBtn);
+            this.Controls.Add(this.ThreeBtn);
+            this.Controls.Add(this.TwoBtn);
+            this.Controls.Add(this.OneBtn);
+            this.Controls.Add(this.NoBtn);
+            this.Controls.Add(this.YesBtn);
             this.Controls.Add(this.messages);
             this.Name = "DoctorGame";
             this.Text = "Doctor Game";
@@ -230,14 +217,13 @@
         #endregion
 
         private System.Windows.Forms.Label messages;
-        private System.Windows.Forms.Button startBtn;
-        private System.Windows.Forms.Button yesBtn;
-        private System.Windows.Forms.Button noBtn;
-        private System.Windows.Forms.Button oneBtn;
-        private System.Windows.Forms.Button twoBtn;
-        private System.Windows.Forms.Button threeBtn;
-        private System.Windows.Forms.Button fourBtn;
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Button YesBtn;
+        private System.Windows.Forms.Button NoBtn;
+        private System.Windows.Forms.Button OneBtn;
+        private System.Windows.Forms.Button TwoBtn;
+        private System.Windows.Forms.Button ThreeBtn;
+        private System.Windows.Forms.Button FourBtn;
+        private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label heartRateLbl;
         private System.Windows.Forms.Label bloodPressureLbl;
         private System.Windows.Forms.Label satsLbl;

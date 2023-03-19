@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\CardiacTamponade.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,8 +54,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Medical\BodyManager.cs" />
-    <Compile Include="Medical\Heart.cs" />
-    <Compile Include="Medical\Lungs.cs" />
+    <Compile Include="Conditions\Condition.cs" />
+    <Compile Include="Medical\ConditionManager.cs" />
     <Compile Include="Medical\Patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

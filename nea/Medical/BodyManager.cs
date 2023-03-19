@@ -7,11 +7,13 @@ namespace hospitalgame
     class BodyManager
     {
         // properties
-        private Heart heart;
-        private Lungs lungs;
+        private int heartRate = -1;
         int[] bloodPressure = { -1, -1 };
+        private int respirationRate = -1;
+        private int oxygenSaturation = -1;
         public double temperature = -1;
         public double bloodSugar = -1;
+        private readonly Patient patient;
         // all not set, won't update in timer unless set
 
         // property modifiers - between -1 and 1, multiplier for change in observations
@@ -22,18 +24,29 @@ namespace hospitalgame
         double respRateModifier = 0d;
         double satsModifier = 0d;
 
-        public BodyManager()
+        // property accessors
+        public int GetHeartRate() { return heartRate; }
+        public bool SetHeartRate(int _heartRate)
         {
-            heart = new Heart();
-            lungs = new Lungs();
+            if (_heartRate < 0 || _heartRate > 300)
+            {
+                return false;
+            }
+            else
+            {
+                heartRate = _heartRate;
+                return true;
+            }
         }
 
-        public Heart getHeart() { return heart; }
-        public Lungs getLungs() { return lungs; }
+        public BodyManager(Patient _patient)
+        {
+            patient = _patient;
+        }
 
-        // property accessors
-        public int[] getBloodPressure() { return bloodPressure; }
-        public bool setBloodPressure(int systolic, int diastolic)
+
+        public int[] GetBloodPressure() { return bloodPressure; }
+        public bool SetBloodPressure(int systolic, int diastolic)
         {
             if (systolic <= diastolic)
             {
@@ -46,8 +59,38 @@ namespace hospitalgame
                 return true;
             }
         }
-        public double getTemperature() { return temperature; }
-        public bool setTemperature(double _temperature)
+
+        public int GetRespirationRate() { return respirationRate; }
+        public bool SetRespirationRate(int _respirationRate)
+        {
+            if (_respirationRate < 0 || _respirationRate > 100)
+            {
+                return false;
+            }
+            else
+            {
+                respirationRate = _respirationRate;
+                return true;
+            }
+        }
+
+        public int GetOxygenSaturation() { return oxygenSaturation; }
+
+        public bool SetOxygenSaturation(int _oxygenSaturation)
+        {
+            if (_oxygenSaturation < 0 || _oxygenSaturation > 100)
+            {
+                return false;
+            }
+            else
+            {
+                oxygenSaturation = _oxygenSaturation;
+                return true;
+            }
+        }
+
+        public double GetTemperature() { return temperature; }
+        public bool SetTemperature(double _temperature)
         {
             if(temperature < 0d || temperature > 50d)
             {
@@ -59,8 +102,8 @@ namespace hospitalgame
                 return true;
             }
         }
-        public double getBloodSugar() { return bloodSugar; }
-        public bool setBloodSugar(double _bloodSugar)
+        public double GetBloodSugar() { return bloodSugar; }
+        public bool SetBloodSugar(double _bloodSugar)
         {
             if(bloodSugar < 0)
             {
@@ -74,59 +117,55 @@ namespace hospitalgame
         }
 
         // modifier setters - between -1 and 1;
-        public bool setHeartRateModifier(double _hrModifier)
+        public bool UpdateHeartRateModifier(double _hrModifier)
         {
             if(_hrModifier < -1 || _hrModifier > 1){ return false; }
-            else { heartRateModifier = _hrModifier; return true; }
+            else { heartRateModifier += _hrModifier; return true; }
         }
-        public bool setBloodPressureModifier(double _bpModifier)
+        public bool UpdateBloodPressureModifier(double _bpModifier)
         {
             if (_bpModifier < -1 || _bpModifier > 1) { return false; }
-            else { bloodPressureModifier = _bpModifier; return true; }
+            else { bloodPressureModifier += _bpModifier; return true; }
         }
-        public bool setRespRateModifier(double _rrModifier)
+        public bool UpdateRespirationRateModifier(double _rrModifier)
         {
             if (_rrModifier < -1 || _rrModifier > 1) { return false; }
-            else { respRateModifier = _rrModifier; return true; }
+            else { respRateModifier += _rrModifier; return true; }
         }
-        public bool setSatsModifier(double _satsModifier)
+        public bool UpdateOxygenSaturationModifier(double _satsModifier)
         {
             if (_satsModifier < -1 || _satsModifier > 1) { return false; }
-            else { satsModifier = _satsModifier; return true; }
+            else { satsModifier += _satsModifier; return true; }
         }
-        public bool setTempModifier(double _tempModifier)
+        public bool UpdateTemperatureModifier(double _tempModifier)
         {
             if (_tempModifier < -1 || _tempModifier > 1) { return false; }
-            else { tempModifier = _tempModifier; return true; }
+            else { tempModifier += _tempModifier; return true; }
         }
-        public bool setbloodSugarModifier(double _bmModifier)
+        public bool UpdateBloodSugarModifier(double _bmModifier)
         {
             if (_bmModifier < -1 || _bmModifier > 1) { return false; }
-            else { bloodSugarModifier = _bmModifier; return true; }
+            else { bloodSugarModifier += _bmModifier; return true; }
         }
 
 
         // update func: applies modifiers to properties and updates them, used for timer tick for displayed obs
-        public void updateObs()
+        public void UpdateObs()
         {
             Random rnd = new Random();
             double rndVariation = (rnd.NextDouble() - 0.5d);
 
-            int newHR = Convert.ToInt32(heart.getHeartRate() + (10 * (heartRateModifier + rndVariation)));
-            heart.setHeartRate(newHR);
-
+            heartRate += Convert.ToInt32(heartRate + (10 * (heartRateModifier + rndVariation)));
             for(int i = 0; i <= 1; i++)
             {
                 bloodPressure[i] = Convert.ToInt32(bloodPressure[i] + (10 * (bloodPressureModifier + rndVariation)));
             }
 
-            int newRR = Convert.ToInt32(lungs.getRespirationRate() + (2 * (respRateModifier + rndVariation)));
-            lungs.setRespirationRate(newRR);
-            int newSats = Convert.ToInt32(lungs.getOxygenSaturation() + (3 * (satsModifier + rndVariation)));
-            lungs.setOxygenSaturation(newSats);
+            respirationRate += Convert.ToInt32(respirationRate + (2 * (respRateModifier + rndVariation)));
+            oxygenSaturation += Convert.ToInt32(oxygenSaturation + (3 * (satsModifier + rndVariation)));
 
-            temperature = temperature + (0.15 * (tempModifier + rndVariation));
-            bloodSugar = bloodSugar + (0.05 * (bloodSugarModifier + rndVariation));
+            temperature += (0.15 * (tempModifier + rndVariation));
+            bloodSugar += bloodSugar + (0.05 * (bloodSugarModifier + rndVariation));
 
         }
 

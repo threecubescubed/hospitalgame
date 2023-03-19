@@ -4,6 +4,7 @@ using System.Text;
 
 namespace hospitalgame
 {
+    /*
     class IntroStage
     {
         private List<string> messages;
@@ -41,4 +42,5 @@ namespace hospitalgame
         public event EventHandler<WriteQuestionEventArgs> WriteQuestion;
 
     }
+    */
 }

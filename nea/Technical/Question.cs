@@ -4,6 +4,7 @@ using System.Text;
 
 namespace hospitalgame
 {
+    /*
     class Question
     {
         private string question;
@@ -30,4 +31,5 @@ namespace hospitalgame
         public Action<Globals.Options> getAction() { return action; }
 
     }
+    */
 }

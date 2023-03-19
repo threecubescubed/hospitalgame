@@ -15,28 +15,21 @@ namespace hospitalgame
             Three,
             Four
         }
-
-        public enum Conditions
-        {
-            // Heart / circulation system
-            Tamponade,
-            Hypovolaemia,
-
-
-            // Lungs / respiratory system
-            Pneumothorax,
-            Haemothorax,
-            Pneumohaemothorax
-        }
     }
-    class WriteMessagesEventArgs : EventArgs
+
+    public class WriteMessagesEventArgs : EventArgs
     {
-        public List<string> messages { get; set; }
+        public List<string> messages;
     }
 
     public class WriteQuestionEventArgs : EventArgs
     {
-        public string message { get; set; }
-        public List<Globals.Options> options { get; set; }
+        public string message;
+        public List<Globals.Options> options;
+    }
+
+    public class ChangeLastButtonPressedEventArgs : EventArgs
+    {
+        public Globals.Options LastOption;
     }
 }

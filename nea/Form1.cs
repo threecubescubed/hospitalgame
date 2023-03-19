@@ -16,12 +16,10 @@ namespace hospitalgame
         public DoctorGame()
         {
             InitializeComponent();
-            stages = this.InitialiseStages();
+            StartSim();
         }
 
-        int stage = -1;
-        List<IntroStage> stages;
-        Patient stabbedMan = new Patient("John", "Doe", 24);
+        readonly Patient stabbedMan = new Patient("John", "Doe", 24);
 
         // writes messages to label
         public void Write(string message)
@@ -34,8 +32,7 @@ namespace hospitalgame
             }
         }
 
-        
-
+        /*
         private List<IntroStage> InitialiseStages()
         {
             var returnList = new List<IntroStage>();
@@ -78,9 +75,7 @@ namespace hospitalgame
                 tempLbl.Visible = true;
                 bloodSugarLbl.Visible = true;
             }
-            List<string> stageOneMessages = new List<string> { "You are an emergency medicine consultant working in A&&E when you receive a trauma alert for a young man who's been stabbed.",
-                                                            "5 minutes later, he is wheeled into a resus bay, and the paramedic gives you a handover. \"24 year old male, stabbed once in the central upper chest 15 minutes ago. Initially conscious, he's been in cardiac arrest for two minutes.\"",
-                                                            "Monitoring equipment begins to be placed on the patient, as the anaesthetist begins to intubate him, and large-bore cannulas are placed in each arm."};
+            
             Question stageOneQuestion = new Question("Do you want to perform a thoracotomy - cutting open the chest to access the heart?", new List<Globals.Options> { Globals.Options.Yes, Globals.Options.No }, stageOneAction);
             IntroStage stageOne = new IntroStage(stageOneMessages, stageOneQuestion);
             returnList.Add(stageOne);
@@ -90,34 +85,32 @@ namespace hospitalgame
 
             return returnList;
         }
+        */
+
 
         // called on initial start of simulation; plays introduction
         public void StartSim()
         {
-            stage = 0;
-            startBtn.Visible = false;
-            Application.DoEvents();
+            // sets up condition manager + cardiac tamponade
+            ConditionManager cm = stabbedMan.GetConditionManager();
+            cm.WriteMessages += WriteMessages;
+            cm.WriteQuestion += WriteQuestion;
 
-            IntroStage s = stages[stage];
-            s.WriteMessages += IntroStage_WriteMessages;
-            s.WriteQuestion += IntroStage_WriteQuestion;
-            s.runIntroStage();
+            var tamponade = new CardiacTamponade();
+            cm.AddCondition(tamponade);
+
+            // writes intro messages, writes patient's symptoms
+            List<string> messages = new List<string> { "You are an emergency medicine consultant working in A&&E when you receive a trauma alert for a young man who's been stabbed.",
+                                                            "5 minutes later, he is wheeled into a resus bay, and the paramedic gives you a handover. \"24 year old male, stabbed once in the central upper chest 15 minutes ago. Initially conscious, he's been in cardiac arrest for two minutes.\"",
+                                                            "Monitoring equipment begins to be placed on the patient, as the anaesthetist begins to intubate him, and large-bore cannulas are placed in each arm."};
+            foreach(string message in messages)
+            {
+                Write(message);
+            }
+            cm.DisplayVisibleSymptoms();
         }
 
-
-        // runs the main game loop. Plays the messages, and then waits for a reply
-        private void gameloop()
-        {
-            stage++;
-            IntroStage s = stages[stage];
-            s.WriteMessages += IntroStage_WriteMessages;
-            s.WriteQuestion += IntroStage_WriteQuestion;
-            s.runIntroStage();
-
-        }
-
-
-        private void IntroStage_WriteMessages(object sender, WriteMessagesEventArgs e)
+        private void WriteMessages(object sender, WriteMessagesEventArgs e)
         {
             foreach (string message in e.messages)
             {
@@ -126,7 +119,7 @@ namespace hospitalgame
             }
         }
 
-        private void IntroStage_WriteQuestion(object sender, WriteQuestionEventArgs e)
+        private void WriteQuestion(object sender, WriteQuestionEventArgs e)
         {
             Write(e.message);
             foreach (Globals.Options option in e.options)
@@ -134,90 +127,88 @@ namespace hospitalgame
                 switch (option)
                 {
                     case Globals.Options.Yes:
-                        yesBtn.Visible = true;
+                        YesBtn.Visible = true;
                         break;
                     case Globals.Options.No:
-                        noBtn.Visible = true;
+                        NoBtn.Visible = true;
                         break;
                     case Globals.Options.One:
-                        oneBtn.Visible = true;
+                        OneBtn.Visible = true;
                         break;
                     case Globals.Options.Two:
-                        twoBtn.Visible = true;
+                        TwoBtn.Visible = true;
                         break;
                     case Globals.Options.Three:
-                        threeBtn.Visible = true;
+                        ThreeBtn.Visible = true;
                         break;
                     case Globals.Options.Four:
-                        fourBtn.Visible = true;
+                        FourBtn.Visible = true;
                         break;
                 }
             }
             Application.DoEvents();
         }
 
-        private void startBtn_Click(object sender, EventArgs e)
+        public static event EventHandler<ChangeLastButtonPressedEventArgs> ChangeLastOption;
+        private void HandleButtonClick(Globals.Options option)
         {
-            StartSim();
+            ChangeLastButtonPressedEventArgs args = new ChangeLastButtonPressedEventArgs()
+            {
+                LastOption = option
+            };
+            ChangeLastOption?.Invoke(this, args);
+            HideButtons();
         }
-
-        private void handleButtonClick(Globals.Options option)
+        private void HideButtons()
         {
-            Action<Globals.Options> a = stages[stage].getQuestion().getAction();
-            a.Invoke(option);
-            gameloop();
+            YesBtn.Visible = false;
+            NoBtn.Visible = false;
+            OneBtn.Visible = false;
+            TwoBtn.Visible = false;
+            ThreeBtn.Visible = false;
+            FourBtn.Visible = false;
         }
-
-        private void yesBtn_Click(object sender, EventArgs e)
+        private void YesBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.Yes);
+            HandleButtonClick(Globals.Options.Yes);
         }
-
-        private void noBtn_Click(object sender, EventArgs e)
+        private void NoBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.No);
+            HandleButtonClick(Globals.Options.No);
         }
-
-        private void oneBtn_Click(object sender, EventArgs e)
+        private void OneBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.One);
+            HandleButtonClick(Globals.Options.One);
         }
-
-        private void twoBtn_Click(object sender, EventArgs e)
+        private void TwoBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.Two);
+            HandleButtonClick(Globals.Options.Two);
         }
-
-        private void threeBtn_Click(object sender, EventArgs e)
+        private void ThreeBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.Three);
+            HandleButtonClick(Globals.Options.Three);
         }
-
-        private void fourBtn_Click(object sender, EventArgs e)
+        private void FourBtn_Click(object sender, EventArgs e)
         {
-            handleButtonClick(Globals.Options.Four);
+            HandleButtonClick(Globals.Options.Four);
         }
-
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             // updates observations
-            BodyManager bm = stabbedMan.getBodyManager();
-            Heart h = bm.getHeart();
-            Lungs l = bm.getLungs();
+            BodyManager bm = stabbedMan.GetBodyManager();
 
-            bm.updateObs();
-
-            int hr = h.getHeartRate();
-            int rr = l.getRespirationRate();
-            int sats = l.getOxygenSaturation();
-            double bloodSugar = bm.getBloodSugar();
-            double temp = bm.getTemperature();
+            bm.UpdateObs();
+            int hr = bm.GetHeartRate();
+            int rr = bm.GetRespirationRate();
+            int sats = bm.GetOxygenSaturation();
+            double bloodSugar = bm.GetBloodSugar();
+            double temp = bm.GetTemperature();
 
             if (hr != -1) { heartRateLbl.Text = "HR: " + hr; }
-            int[] bloodPressure = bm.getBloodPressure();
+            int[] bloodPressure = bm.GetBloodPressure();
             if(bloodPressure[0] != -1) { bloodPressureLbl.Text = "BP: " + bloodPressure[0] + "/" + bloodPressure[1]; }
 
-            if (rr != -1) { respirationRateLabel.Text = "RR: " + l.getRespirationRate(); }
+            if (rr != -1) { respirationRateLabel.Text = "RR: " + respirationRateLabel; }
             if(sats != -1) { satsLbl.Text = "SpO2: " + sats; }
 
             if(bloodSugar != -1d) { bloodSugarLbl.Text = "BM: " + bloodSugar; }
