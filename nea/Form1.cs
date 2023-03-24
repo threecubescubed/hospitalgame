@@ -16,10 +16,10 @@ namespace hospitalgame
         public DoctorGame()
         {
             InitializeComponent();
-            StartSim();
         }
 
-        readonly Patient stabbedMan = new Patient("John", "Doe", 24);
+        readonly Patient stabbedMan = new Patient(134, new int[] { 92, 55 }, 24, 77);
+        bool started;
 
         // writes messages to label
         public void Write(string message)
@@ -28,172 +28,23 @@ namespace hospitalgame
             {
                 this.messages.Text = message.Substring(0, i);
                 Application.DoEvents();
-                Thread.Sleep(25);
+                //Thread.Sleep(25);
             }
+            //Thread.Sleep(2000);
         }
 
-        /*
-        private List<IntroStage> InitialiseStages()
-        {
-            var returnList = new List<IntroStage>();
-
-            // first stage - intro, thoracotomy decision, begin obs monitoring
-            void stageOneAction(Globals.Options option)
-            {
-                BodyManager bm = stabbedMan.getBodyManager();
-                Heart h = bm.getHeart();
-                Lungs l = bm.getLungs();
-
-                bm.setTemperature(34.2);
-                bm.setBloodSugar(3.4);
-                if (option == Globals.Options.Yes)
-                {
-                    Write("You and your registrar begin to perform a clamshell thoracotomy on the man. You first perform bilateral thoracostomies, which produce bilateral air and blood. You then make the incision across the chest, crack the sternum, and use retractors to hold the chest open.");
-                    Write("You lift the pericardium of the heart and cut it, gaining access to the heart. Clots and blood are both present. You manually remove the large blood clots, before suctioning the remaining blood, and examining the heart.");
-                    Write("The heart begins beating again, but with a considerably reduced cardiac output. You suture the hole in the ventricle closed, before beginning manual cardiac massage.");
-
-                    h.setHeartRate(34);
-                    bm.setHeartRateModifier(0.20);
-                    l.setOxygenSaturation(74);
-                    bm.setSatsModifier(0.30);
-                    l.setRespirationRate(4);
-                    bm.setRespRateModifier(0.20);
-                    bm.setBloodPressure(86, 54);
-
-                }
-                else
-                {
-                    h.setHeartRate(0);
-                    l.setOxygenSaturation(0);
-                    l.setRespirationRate(0);
-                }
-
-                heartRateLbl.Visible = true;
-                bloodPressureLbl.Visible = true;
-                satsLbl.Visible = true;
-                respirationRateLabel.Visible = true;
-                tempLbl.Visible = true;
-                bloodSugarLbl.Visible = true;
-            }
-            
-            Question stageOneQuestion = new Question("Do you want to perform a thoracotomy - cutting open the chest to access the heart?", new List<Globals.Options> { Globals.Options.Yes, Globals.Options.No }, stageOneAction);
-            IntroStage stageOne = new IntroStage(stageOneMessages, stageOneQuestion);
-            returnList.Add(stageOne);
-
-
-
-
-            return returnList;
-        }
-        */
-
-
-        // called on initial start of simulation; plays introduction
-        public void StartSim()
-        {
-            // sets up condition manager + cardiac tamponade
-            ConditionManager cm = stabbedMan.GetConditionManager();
-            cm.WriteMessages += WriteMessages;
-            cm.WriteQuestion += WriteQuestion;
-
-            var tamponade = new CardiacTamponade();
-            cm.AddCondition(tamponade);
-
-            // writes intro messages, writes patient's symptoms
-            List<string> messages = new List<string> { "You are an emergency medicine consultant working in A&&E when you receive a trauma alert for a young man who's been stabbed.",
-                                                            "5 minutes later, he is wheeled into a resus bay, and the paramedic gives you a handover. \"24 year old male, stabbed once in the central upper chest 15 minutes ago. Initially conscious, he's been in cardiac arrest for two minutes.\"",
-                                                            "Monitoring equipment begins to be placed on the patient, as the anaesthetist begins to intubate him, and large-bore cannulas are placed in each arm."};
-            foreach(string message in messages)
-            {
-                Write(message);
-            }
-            cm.DisplayVisibleSymptoms();
-        }
 
         private void WriteMessages(object sender, WriteMessagesEventArgs e)
         {
             foreach (string message in e.messages)
             {
                 Write(message);
-                Thread.Sleep(2000);
             }
         }
 
-        private void WriteQuestion(object sender, WriteQuestionEventArgs e)
-        {
-            Write(e.message);
-            foreach (Globals.Options option in e.options)
-            {
-                switch (option)
-                {
-                    case Globals.Options.Yes:
-                        YesBtn.Visible = true;
-                        break;
-                    case Globals.Options.No:
-                        NoBtn.Visible = true;
-                        break;
-                    case Globals.Options.One:
-                        OneBtn.Visible = true;
-                        break;
-                    case Globals.Options.Two:
-                        TwoBtn.Visible = true;
-                        break;
-                    case Globals.Options.Three:
-                        ThreeBtn.Visible = true;
-                        break;
-                    case Globals.Options.Four:
-                        FourBtn.Visible = true;
-                        break;
-                }
-            }
-            Application.DoEvents();
-        }
-
-        public static event EventHandler<ChangeLastButtonPressedEventArgs> ChangeLastOption;
-        private void HandleButtonClick(Globals.Options option)
-        {
-            ChangeLastButtonPressedEventArgs args = new ChangeLastButtonPressedEventArgs()
-            {
-                LastOption = option
-            };
-            ChangeLastOption?.Invoke(this, args);
-            HideButtons();
-        }
-        private void HideButtons()
-        {
-            YesBtn.Visible = false;
-            NoBtn.Visible = false;
-            OneBtn.Visible = false;
-            TwoBtn.Visible = false;
-            ThreeBtn.Visible = false;
-            FourBtn.Visible = false;
-        }
-        private void YesBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.Yes);
-        }
-        private void NoBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.No);
-        }
-        private void OneBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.One);
-        }
-        private void TwoBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.Two);
-        }
-        private void ThreeBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.Three);
-        }
-        private void FourBtn_Click(object sender, EventArgs e)
-        {
-            HandleButtonClick(Globals.Options.Four);
-        }
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if(!started) { return; }
             // updates observations
             BodyManager bm = stabbedMan.GetBodyManager();
 
@@ -201,18 +52,288 @@ namespace hospitalgame
             int hr = bm.GetHeartRate();
             int rr = bm.GetRespirationRate();
             int sats = bm.GetOxygenSaturation();
-            double bloodSugar = bm.GetBloodSugar();
-            double temp = bm.GetTemperature();
 
             if (hr != -1) { heartRateLbl.Text = "HR: " + hr; }
             int[] bloodPressure = bm.GetBloodPressure();
             if(bloodPressure[0] != -1) { bloodPressureLbl.Text = "BP: " + bloodPressure[0] + "/" + bloodPressure[1]; }
 
-            if (rr != -1) { respirationRateLabel.Text = "RR: " + respirationRateLabel; }
+            if (rr != -1) { respirationRateLabel.Text = "RR: " + rr; }
             if(sats != -1) { satsLbl.Text = "SpO2: " + sats; }
-
-            if(bloodSugar != -1d) { bloodSugarLbl.Text = "BM: " + bloodSugar; }
-            if(temp != -1d) { tempLbl.Text = "Temp: " + temp; }
         }
+
+
+        // called on initial start of simulation; plays introduction
+        public void StartSim()
+        {
+            stabbedMan.userInterfacer.WriteMessages += WriteMessages;
+            CardiacTamponadeTrauma tamponade = new CardiacTamponadeTrauma(stabbedMan.GetConditionManager());
+
+            Write("You are an emergency medicine consultant, working a shift in the Emergency Department. You receive a trauma alert for a patient being transported to you to arrive in 10 minutes' time, a stabbing with major trauma. No other details are given.");
+            Write("A patient is wheeled into A&&E by paramedics. He is bleeding heavily from the chest, and is barely conscious.");
+            Write("The paramedic begins to give you a handover. \"This male is 24 years old. Roughly half an hour ago he was stabbed once in the central upper chest with a kitchen knife roughly 6 inches long. Initially conscious and talking, he's been GCS 8 for about 2 minutes. Heart rate 134, blood pressure 92 / 55, respiration rate 24, sats 77%. We've put haemostatic gauze on his stab wound, given 0.5g TXA, began a bag of fluids and transported to hospital.\"");
+
+            started = true;
+        }
+
+        private void StartBtn_Click(object sender, EventArgs e)
+        {
+            StartSim();
+        }
+
+        private void heartRateLbl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Heart Rate: How many times in a minute their heart is beating. Usually around 60-100, and anything out of that range is considered bad.", "Heart Rate");
+        }
+
+        private void bloodPressureLbl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Blood Pressure: the pressure inside of the arteries of the body. The first number is when the heart beats, and the second number is when it's at rest. The 'textbook' value is 120/80. Low blood pressure can be associated with blood loss.", "Blood Pressure");
+        }
+
+        private void satsLbl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("SpO2: the 'peripheral' saturation of oxygen. This is in your fingers or toes. The normal value is above 95%. Anything below in a normally healthy person is an issue, and should be addressed.", "Oxygen Saturation");
+        }
+
+        private void respirationRateLabel_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Respiration Rate: how many times in a minute a person breathes. The normal rate for a healthy adult is 12 to 20. If it is less than that, it may be a sign the person is not conscious enough to breath properly. If above that, the person likely has an issue with their breathing, or low blood oxygen.", "Respiration Rate");
+        }
+
+
+
+
+        // controls to show various portions of resuscitation trolley
+        private void AirwayBtn_Click(object sender, EventArgs e)
+        {
+            if (AirwayGroupBox.Visible)
+            {
+                AirwayGroupBox.Hide();
+            }
+            else
+            {
+                if(CirculationGroupBox.Visible) { CirculationGroupBox.Hide(); }
+                AirwayGroupBox.Show();
+            }
+        }
+
+        private void BreathingBtn_Click(object sender, EventArgs e)
+        {
+            if (BreathingGroupBox.Visible)
+            {
+                BreathingGroupBox.Hide();
+            }
+            else
+            {
+                if(DrugsGroupBox.Visible) { DrugsGroupBox.Hide(); }
+                BreathingGroupBox.Show();
+            }
+        }
+
+        private void CirculationBtn_Click(object sender, EventArgs e)
+        {
+            if(CirculationGroupBox.Visible)
+            {
+                CirculationGroupBox.Hide();
+            }
+            else
+            {
+                if(AirwayGroupBox.Visible) { AirwayGroupBox.Hide(); }
+                CirculationGroupBox.Show();
+            }
+        }
+
+
+        private void DrugsBtn_Click(object sender, EventArgs e)
+        {
+            if(DrugsGroupBox.Visible)
+            {
+                DrugsGroupBox.Hide();
+            }
+            else
+            {
+                if(BreathingGroupBox.Visible) { BreathingGroupBox.Hide(); }
+                DrugsGroupBox.Show();
+            }
+        }
+        private void OtherBtn_Click(object sender, EventArgs e)
+        {
+            if(OtherGroupBox.Visible)
+            {
+                OtherGroupBox.Hide();
+            }
+            else
+            {
+                if(AirwayGroupBox.Visible) { AirwayGroupBox.Hide(); }
+                if(BreathingGroupBox.Visible) { BreathingGroupBox.Hide(); }
+                if(CirculationGroupBox.Visible) { CirculationGroupBox.Hide(); }
+                if (DrugsGroupBox.Visible) { DrugsGroupBox.Hide(); }
+                OtherGroupBox.Show();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        // buttons for equipment / procedures / drugs
+
+        private void NPABtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("This is a tube that goes into the nose, and reaches the back of the throat. It helps maintain a 'patent' (clear) airway. Often used with OPAs.", "NPA: Nasopharyngeal airway");
+            }
+            else
+            {
+
+            }
+        }
+
+        private void OPABtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("This is a tube that goes into the mouth, and reaches the back of the throat. It helps maintain a 'patent' (clear) airway. Often used with NPAs.", "Oropharyngeal airway");
+            }
+        }
+
+        private void LMABtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("This is a tube that goes into the mouth, and reaches an opening in the airway before the vocal chords, called the 'glottis'. It inflates, and allows a secure airway in the majority of situations.", "Laryngeal mask airway");
+            }
+        }
+
+        private void SuctionBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A portable device which allows the suctioning of fluids out of the airway and mouth, which may otherwise obstruct the airway.", "Suction");
+            }
+        }
+
+        private void IntubationKitBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("Intubation involves a small tube (an endotracheal tube, or ETT) that is passed through the mouth and throat into the trachea, the start of the lungs. A balloon is inflated to keep the tube in place, and it allows the most effective oxygen delivery to the patient.", "Intubation kit");
+            }
+        }
+
+        private void BVMBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A BVM, or bag valve mask, is a mask with a self inflating bag attached to it, with tubing to attach to oxygen. If a patient's breathing is outside of the normal ranges, a bag valve mask is used to provide adequate oxygen to the patient.", "Bag valve mask");
+            }
+        }
+
+        private void OxygenBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("Oxygen canisters provide pure oxygen to patients when it is clinically necessary. It can be attached to a non-rebreathe mask, or a bag valve mask, as well as to an endotracheal tube and a laryngeal mask airway.", "Oxygen");
+            }
+        }
+
+        private void NRMBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A non-rebreathe mask allows delivery of high-flow oxygen (15L/min) to patients who can breathe by themselves.", "Non-rebreathe mask");
+            }
+        }
+
+        
+
+        private void FluidsBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A solution of water and sodium chloride (salt) at 0.9% concentration. Can be used to address hypovolaemia (", "Fluids");
+            }
+        }
+
+        private void BloodsBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("Blood can be given to patients with blood loss to replenish it. It is warmed before it is given, so it doesn't reduce the body's core temperature.", "Bloods");
+            }
+        }
+
+        private void WoundDressingsBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("Bandages, gauze, and other products designed to stop or minimise bleeding and stabilise a patient before the bleeding can be definitively stopped with surgery.", "Wound dressings");
+            }
+        }
+
+        private void TXABtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A drug which reduces blood loss by stopping the breakdown of substances which cause blood clots. Used frequently in trauma with blood loss.", "Tranexamic acid");
+            }
+        }
+
+        private void AdrenalineBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("1mL of 1 in 1,000 parts adrenaline, given intravenously within cardiac arrest to attempt to restart the heart. Indicated immediately if PEA / asystole, and after third shock if VF / VT.", "Adrenaline");
+            }
+        }
+
+        private void AmiodaroneBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("Amiodarone is an anti-arrhythmic drug. Given after the third shock when the patient remains in VF / VT at a 300mg dose.", "Amiodarone");
+            }
+            else
+            {
+                AmiodaroneBtn.Hide();
+            }
+        }
+
+        private void ThoracostomyLBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A thoracostomy is an incision made under the armpit to access the space between the lungs and the chest wall. When performed, it will relieve any pressure from air or blood pushing on the lung on the left side.", "Thoracostomy");
+            }
+        }
+
+        private void ThoracostomyRBtn_Click(object sender, EventArgs e)
+        {
+            if(!started)
+            {
+                MessageBox.Show("A thoracostomy is an incision made under the armpit to access the space between the lungs and the chest wall. When performed, it will relieve any pressure from air or blood pushing on the lung on the right side.", "Thoracostomy");
+            }
+            
+        }
+
+        private void ThoracotomyBtn_Click(object sender, EventArgs e)
+        {
+            if (!started)
+            {
+                MessageBox.Show("A clamshell thoracotomy is performed by extending thoracostomy incisions on either side across the chest, and then cracking the sternum, and spreading the chest to access the heart and other organs. This is only performed if a patient is in cardiac arrest with cardiac tamponade, and is a last resort to save the patient's life.", "Clamshell thoracotomy");
+            }
+            else
+            {
+            }
+        }
+
     }
 }

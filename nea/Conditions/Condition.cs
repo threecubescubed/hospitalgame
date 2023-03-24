@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hospitalgame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,26 +7,29 @@ using System.Threading.Tasks;
 
 namespace hospitalgame
 {
-    abstract class Condition
+    public class Condition
     {
         public string name;
-        protected double heartRateModifier;
-        protected double bloodPressureModifier;
-        protected double respirationRateModifier;
-        protected double oxygenSaturationModifier;
-        protected double temperatureModifier;
-        protected double bloodSugarModifier;
-        protected List<string> definiteVisibleSymptoms;
-        protected List<string> possibleVisibleSymptoms;
+        protected VitalSignModifier heartRateModifier = new VitalSignModifier();
+        protected VitalSignModifier bloodPressureModifier = new VitalSignModifier();
+        protected VitalSignModifier respirationRateModifier = new VitalSignModifier();
+        protected VitalSignModifier oxygenSaturationModifier = new VitalSignModifier();
+        protected VitalSignModifier bloodModifier = new VitalSignModifier();
 
-        public double GetHeartRateModifier() { return heartRateModifier; }
-        public double GetBloodPressureModifier() { return bloodPressureModifier; }
-        public double GetRespirationRateModifier() { return respirationRateModifier; }
-        public double GetOxygenSaturationModifier() { return oxygenSaturationModifier; }
-        public double GetTemperatureModifier() { return temperatureModifier; }
-        public double GetBloodSugarModifier() { return bloodSugarModifier; }
+        protected ConditionManager conditionManager;
 
-        public List<string> GetPossibleVisibleSymptoms() { return possibleVisibleSymptoms; }
-        public List<string> GetDefiniteVisibleSymptoms() { return definiteVisibleSymptoms; }
+        //protected DecisionNode decisionTreeNode = new DecisionNode(new List<UserInteraction>(), new Dictionary<Globals.Options, DecisionNode>(), null);
+
+        // public DecisionNode getDecisionTree() { return decisionTreeNode; }
+
+        public VitalSignModifier GetHeartRateModifier() { return heartRateModifier; }
+        public VitalSignModifier GetBloodPressureModifier() { return bloodPressureModifier; }
+        public VitalSignModifier GetRespirationRateModifier() { return respirationRateModifier; }
+        public VitalSignModifier GetOxygenSaturationModifier() { return oxygenSaturationModifier; }
+        public VitalSignModifier GetBloodModifier() { return bloodModifier; }
+
+        public ConditionManager GetConditionManager() { return conditionManager; }
+        public void SetConditionManager(ConditionManager _conditionManager) { conditionManager = _conditionManager; }
+
     }
 }

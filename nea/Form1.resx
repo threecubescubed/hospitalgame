@@ -120,4 +120,12 @@
   <metadata name="Timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="messages.Text" xml:space="preserve">
+    <value>For an explanation of the below values, click the text. For an explanation of any action or drug in the resuscitation trolley, press the corresponding button. When you are ready to begin, press 'Start'.
+
+</value>
+  </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>40</value>
+  </metadata>
 </root>

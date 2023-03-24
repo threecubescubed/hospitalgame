@@ -9,3 +9,14 @@ C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.exe
 C:\Users\Ben\source\repos\nea\nea\obj\Debug\nea.pdb
 C:\Users\Ben\Source\Repos\nea\nea\bin\Debug\nea.exe.CodeAnalysisLog.xml
 C:\Users\Ben\Source\Repos\nea\nea\bin\Debug\nea.exe.lastcodeanalysissucceeded
+C:\Users\Ben\Source\Repos\hospitalgame\nea\bin\Debug\nea.exe.config
+C:\Users\Ben\Source\Repos\hospitalgame\nea\bin\Debug\nea.exe
+C:\Users\Ben\Source\Repos\hospitalgame\nea\bin\Debug\nea.pdb
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.AssemblyReference.cache
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.SuggestedBindingRedirects.cache
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\hospitalgame.DoctorGame.resources
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.Properties.Resources.resources
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.GenerateResource.cache
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.CoreCompileInputs.cache
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.exe
+C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.pdb
