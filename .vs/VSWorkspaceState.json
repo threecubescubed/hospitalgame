@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\nea"
+    "\\nea",
+    "\\nea\\Conditions",
+    "\\nea\\Medical",
+    "\\nea\\Technical"
   ],
-  "SelectedNode": "\\nea\\Form1.cs",
+  "SelectedNode": "\\nea\\Medical\\BodyManager.cs",
   "PreviewInSolutionExplorer": false
 }

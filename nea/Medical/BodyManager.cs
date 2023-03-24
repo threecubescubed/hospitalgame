@@ -138,29 +138,39 @@ namespace hospitalgame
         // update func: applies modifiers to properties and updates them, used for timer tick for displayed obs
         public void UpdateObs()
         {
+
             if (cardiacArrest)
             {
                 return;
             }
-            Random rnd = new Random();
-            double rndVariation = ((rnd.NextDouble() - 0.5d) * 0.1);
 
-            int newHR = heartRate + Convert.ToInt32(10 * (bodyModeller.GetHeartRateModifier().GetModifier() + rndVariation));
+            bodyModeller.updateModifiers();
+            int newHR = heartRate + Convert.ToInt32(10 * (bodyModeller.GetHeartRateModifier().GetModifier()));
             if (newHR < 10) { StartCardiacArrest(); return; }
             SetHeartRate(newHR);
             int[] newBloodPressure = new int[2];
             for (int i = 0; i <= 1; i++)
             {
-                newBloodPressure[i] = Convert.ToInt32(bloodPressure[i] + (10 * (bodyModeller.GetBloodPressureModifier().GetModifier() + rndVariation)));
+                newBloodPressure[i] = Convert.ToInt32(bloodPressure[i] + (10 * (bodyModeller.GetBloodPressureModifier().GetModifier())));
                 if (newBloodPressure[i] < 10) { StartCardiacArrest(); return; }
             }
             SetBloodPressure(newBloodPressure);
 
-            SetRespirationRate(respirationRate + Convert.ToInt32(2 * (bodyModeller.GetRespirationRateModifier().GetModifier() + rndVariation)));
-            SetOxygenSaturation(oxygenSaturation + Convert.ToInt32(3 * (bodyModeller.GetOxygenSaturationModifier().GetModifier() + rndVariation)));
+            SetRespirationRate(respirationRate + Convert.ToInt32(2 * (bodyModeller.GetRespirationRateModifier().GetModifier())));
+            SetOxygenSaturation(oxygenSaturation + Convert.ToInt32(3 * (bodyModeller.GetOxygenSaturationModifier().GetModifier())));
 
 
         }
+
+
+
+
+
+        public void InsertNPA()
+        {
+            
+        }
+
 
     }
 }

@@ -20,3 +20,10 @@ C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.GenerateResource
 C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.CoreCompileInputs.cache
 C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.exe
 C:\Users\Ben\Source\Repos\hospitalgame\nea\obj\Debug\nea.pdb
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.AssemblyReference.cache
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\hospitalgame.DoctorGame.resources
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.Properties.Resources.resources
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.GenerateResource.cache
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.csproj.CoreCompileInputs.cache
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.exe
+C:\Users\022713\Source\Repos\hospitalgame\nea\obj\Debug\nea.pdb

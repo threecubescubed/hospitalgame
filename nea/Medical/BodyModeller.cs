@@ -38,9 +38,20 @@ namespace hospitalgame
             }
         }
 
-        public void update()
+        public void updateModifiers()
         {
+            Random rnd = new Random();
 
+            double rndVariation = ((rnd.NextDouble() - 0.5d) * 0.1);
+            heartRateModifier += rndVariation;
+            rndVariation = ((rnd.NextDouble() - 0.5d) * 0.1);
+            bloodPressureModifier += rndVariation;
+            rndVariation = ((rnd.NextDouble() - 0.5d) * 0.1);
+            respirationRateModifier += rndVariation;
+            rndVariation = ((rnd.NextDouble() - 0.5d) * 0.1);
+            oxygenSaturationModifier += rndVariation;
         }
+
+
     }
 }
